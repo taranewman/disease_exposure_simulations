@@ -1,12 +1,22 @@
+# import libraries 
 library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library("PMCMRplus") 
 
-setwd("~/Documents/CSC578A/FINAL_DATA_FOLDER/Scenario1")
+# set working directory
+setwd("~/Documents/Git/disease_exposure_simulations/Exposure_data_and_analysis/Scenario1")
+
+# read in data 
 base_dataset = read.csv("baseScenario_output.txt", header = TRUE, nrows = 1000 )
+
+base_dataset$Scenario <- gsub("base", "Control", base_dataset$Scenario)
 
 
 
 base_vaccinated = read.csv("baseScenario1_vaccinated_output.txt", header = TRUE, nrows = 1000 )
 
+base_vaccinated$Scenario <- gsub("base/Vaccinated", "Vaccinated", base_vaccinated$Scenario)
 
 clothMask_SD = read.csv("clothMask_Social_Distancing_output.txt", header = TRUE, nrows = 1000)
 
@@ -36,12 +46,8 @@ social_distancing_vaccinated = read.csv("socialDistancing_vaccinatedScenario_out
 
 
 
-boxplot(Exposed~Scenario, data = base_dataset, main = "Infected people graph", xlab = "Scenario", ylab = "Number of exposed")
 
-
-boxplot(Exposed~Scenario, data = base_vaccinated, main = "Infected people graph", xlab = "Scenario", ylab = "Number of exposed")
-
-
+# create combined data frame
 
 mydf <- data.frame(Number_Exposed=c(base_dataset$Exposed,base_vaccinated$Exposed,clothMask_SD$Exposed, clothMask_SD_vaccinated$Exposed, 
                        clothMask$Exposed, clothMask_vaccinated$Exposed, n95_SD$Exposed,n95_SD_vaccinated$Exposed,
@@ -51,6 +57,9 @@ mydf <- data.frame(Number_Exposed=c(base_dataset$Exposed,base_vaccinated$Exposed
                        clothMask$Scenario, clothMask_vaccinated$Scenario, n95_SD$Scenario, n95_SD_vaccinated$Scenario,
                        n95$Scenario, n95_vaccinated$Scenario, social_distancing$Scenario, social_distancing_vaccinated$Scenario))
 
+
+# split into two for easier visualization 
+# second half contains all social distancing variables
 
 first_half_mydf <- data.frame(Number_Exposed=c(base_dataset$Exposed,base_vaccinated$Exposed, 
                                     clothMask$Exposed, clothMask_vaccinated$Exposed, 
@@ -71,31 +80,33 @@ second_half_mydf <- data.frame(Number_Exposed=c(social_distancing$Exposed, socia
                                       n95_SD$Scenario, n95_SD_vaccinated$Scenario))
 
 
+
+# set order so graph labeled appropriately 
 second_half_mydf$Health_Measures <- factor(second_half_mydf$Health_Measures , levels=c("SD", "SD/Vaccinated", "ClothMask/SD", "ClothMask/SD/Vaccinated", "N95/SD", "N95/SD/Vaccinated"))
 
-boxplot(Number_Exposed~Health_Measures, data = mydf, main = "Infected people graph", xlab = "Scenario", ylab = "Number of exposed")
+first_half_mydf$Health_Measures <- factor(first_half_mydf$Health_Measures , levels=c("Control", "Vaccinated", "ClothMask", "ClothMask/Vaccinated", "N95", "N95/Vaccinated"))
 
+# add graph colours
 myColours = c("cyan1", "darkblue", "lightpink", "lightpink3", "chartreuse", "chartreuse4")
 
-boxplot(Number_Exposed~Health_Measures, data = first_half_mydf, main = "Scenario 1", xlab = "Public Health Measure(s)", ylab = "Number of exposed", col = myColours)
-
-boxplot(Number_Exposed~Health_Measures, data = second_half_mydf, main = "Scenario 1 - Social Distancing", xlab = "Public Health Measures(s)", ylab = "Number of exposed", col = myColours)
 
 
-mean(base_dataset$Exposed)
-mean(base_vaccinated$Exposed)
+# plot graphs 
+boxplot(Number_Exposed~Health_Measures, data = first_half_mydf, main = "Scenario 1", xlab = "Public Health Measure(s)", ylab = "Number of exposed agents", col = myColours, par(cex.axis=1.5), par(cex.lab=1.6), cex.main=2.0)
 
+boxplot(Number_Exposed~Health_Measures, data = second_half_mydf, main = "Scenario 1 - Social Distancing", xlab = "Public Health Measures(s)", ylab = "Number of exposed agents", col = myColours, par(cex.axis=1.4), par(cex.lab=1.6), cex.main=2.0, ylim = c(0,60))
 
 
 
 
 
+######## Statistical tests ######### 
+# Method:  HAWORTH M. B.: Biomechanical Locomotion Heterogeneity in Synthetic Crowds. PhD thesis, York University, November 2019.
+# results considered significant when all tests have p < 0.01
 
 
-library("PMCMRplus") 
 
-
-my_data <- first_half_mydf
+my_data <- mydf
 Y <- my_data[,1] # y is actual data infected data
 g <- as.factor(my_data[,2]) #group label  (separates a tab)
 k1 <- kruskal.test( Y, g ) 
@@ -119,19 +130,4 @@ summary(c1); summary(c2); summary(c3); summary(d1); summary(d2); summary(d3); su
 
 
 
-
-
-histogramtest = data.frame(Exp = base_dataset1000$Exposed, Scn = base_dataset1000$Scenario)
-hist(social_distancing$Exposed, prob = TRUE)
-
-lm = (formula = mydf$Number_Exposed ~ mydf$Health_Measures)
-lm
-
-df = data.frame(Number_Exposed = c(base_dataset1000$Exposed, clothMask1000$Exposed), Health_Measures = c(base_dataset1000$Scenario, clothMask1000$Scenario))
-t.test(df$Number_Exposed~df$Health_Measures,  mu = 0, alt = "two.sided", conf = 0.95, var.eq = F, paired = F)
-
-res.aov <- aov(Number_Exposed ~ Health_Measures, data = mydf)
-# Summary of the analysis
-summary(res.aov)
-TukeyHSD(aov(mydf$Number_Exposed ~ as.factor(mydf$Health_Measures)))
 
