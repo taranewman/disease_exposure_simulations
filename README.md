@@ -13,4 +13,4 @@ Click "run simulation" to run and visualize the simulaiton.
 
 ## Exposure_data_and_analysis
 
-This folder contains the data output for Scenario1, Scenario2, and timestep analysis simulaitons. In each folder contains the output data for all variables with the number of Susceptible, Exposed, Infectious, and Recovered agents and scenario variable. The R file imports and plots the data as presented in Modelling the use of public health measures to reduce disease exposure using crowd simulation and includes the statistical tests used to analyze the significance of the results. 
+This folder contains the data output for Scenario1, Scenario2, and timestep analysis simulaitons. In each folder contains the output data for all variables with the number of Susceptible, Exposed, Infectious, and Recovered agents and scenario variable. The R file imports and plots the data as presented in Modelling the use of public health measures to reduce disease exposure using crowd simulation and includes the statistical tests used to analyze the significance of the results in the respective "*analysis.R" files. 
