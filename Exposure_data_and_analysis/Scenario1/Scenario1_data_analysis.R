@@ -87,7 +87,7 @@ second_half_mydf$Health_Measures <- factor(second_half_mydf$Health_Measures , le
 first_half_mydf$Health_Measures <- factor(first_half_mydf$Health_Measures , levels=c("Control", "Vaccinated", "ClothMask", "ClothMask/Vaccinated", "N95", "N95/Vaccinated"))
 
 # add graph colours
-myColours = c("cyan1", "darkblue", "lightpink", "lightpink3", "chartreuse", "chartreuse4")
+myColours = c("cyan1", "darkcyan", "lightpink", "lightpink3", "chartreuse", "chartreuse4")
 
 
 
@@ -125,8 +125,6 @@ if ( k1$p.value < 0.05 ) {
 c1; c2; c3; d1; d2; d3; n1; n2 
 # alternate representation of post-hoc test results 
 summary(c1); summary(c2); summary(c3); summary(d1); summary(d2); summary(d3); summary(n1); summary(n2)
-
-
 
 
 

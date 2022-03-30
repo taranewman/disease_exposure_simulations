@@ -42,7 +42,7 @@ mydf <- data.frame(Number_Exposed=c(base_dataset$Exposed, base_vaccinated$Expose
 # set order so graph labeled correctly
 mydf$Health_Measures <- factor(mydf$Health_Measures , levels=c("Control", "Vaccinated", "ClothMask", "ClothMask/Vaccinated", "N95", "N95/Vaccinated"))
 # set graph colours
-myColours = c("cyan1", "darkblue", "lightpink", "lightpink3", "chartreuse", "chartreuse4")
+myColours = c("cyan1", "darkcyan", "lightpink", "lightpink3", "chartreuse", "chartreuse4")
 
 # plot graph
 boxplot(Number_Exposed~Health_Measures, data = mydf, main = "Scenario 2", xlab = "Public Health Measure(s)", ylab = "Number of exposed agents", col = myColours, par(cex.axis=1.5), par(cex.lab=1.5), cex.main=1.5)
@@ -78,3 +78,8 @@ if ( k1$p.value < 0.05 ) {
 c1; c2; c3; d1; d2; d3; n1; n2 
 # alternate representation of post-hoc test results 
 summary(c1); summary(c2); summary(c3); summary(d1); summary(d2); summary(d3); summary(n1); summary(n2)
+
+
+
+
+
