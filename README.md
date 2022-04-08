@@ -4,12 +4,21 @@
 Below is a description on what is contained in each folder
 
 ## Scenarios-PubHlthMsr_Parameters 
-In this folder is the Vadere project folders to re run the simulations described in Modelling the use of public health measures to reduce disease
-exposure using crowd simulation.
-There are two scenarios, scenario 1 and scenario 2. For each there simulations with modified parameters to model public health measures. 
-For example to access the control scenario (no public health measures) for scenario 1, in Vadere (https://www.vadere.org/download/) open the Scenario1/base:Control_scenario/ folder and open the vadere.project file. 
+This folder contains the Vadere project folders to re run the simulations described in "Modelling the use of public health measures to reduce disease
+exposure using crowd simulation".
+### Scenario1 and Scenario2
+There are two scenarios, Scenario 1 and Scenario 2. For each scenario, there are simulations with modified parameters to model public health measures. 
+For example to access the control scenario (no public health measures) for Scenario 1, in Vadere (https://www.vadere.org/download/) open the Scenario1/base:Control_scenario/ folder and open the vadere.project file. 
 From there, the parameters and topography can be viewed or edited. 
 Click "run simulation" to run and visualize the simulaiton. 
+
+Once the simulation is complete, click on the output file in the bottom right corner of the VadereGUI and then on "Post Visualization" in the top right corner is visualize the simuation. 
+
+### timestep
+
+This folder contains the Vadere project files for the various timesteps tested for the control and cloth mask scenarios for Scenario 1 and Scenario 2. 
+The simulations can be run in the same way described above (clicking on the vadere.project file etc.)
+
 
 ## Exposure_data_and_analysis
 
